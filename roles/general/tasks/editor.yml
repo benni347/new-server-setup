@@ -1,0 +1,37 @@
+- name: Remove the nano and vi packages
+  ansible.builtin.package:
+    name:
+      - nano
+      - vim
+      - vim-common
+      - vim-runtime
+      - vim-tiny
+    state: absent
+  tags: packages
+  become: true
+
+- name: Download latest stable version of nvim
+  ansible.builtin.get_url:
+    url: https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
+    dest: /usr/local/bin/nvim.appimage
+    owner: root
+    group: root
+    mode: '0755'
+  tags: packages
+  become: true
+
+- name: Add nvim alternatives
+  community.general.alternatives:
+    link: "/usr/bin/{{ item }}"
+    name: "{{ item }}"
+    path: /usr/local/bin/nvim.appimage
+    priority: 110
+  tags: packages
+  become: true
+  loop:
+    - ex
+    - vi
+    - view
+    - vim
+    - vimdiff
+    - nvim

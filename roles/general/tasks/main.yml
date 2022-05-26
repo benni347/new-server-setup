@@ -1,0 +1,22 @@
+- name: Import tasks - default packages
+  ansible.builtin.import_tasks: pkgs.yml
+
+#  ansible.builtin.import_tasks: hostname.yml
+
+- name: Import tasks - misc
+  ansible.builtin.import_tasks: misc.yml
+
+- name: Import tasks - locales
+  ansible.builtin.import_tasks: locale.yml
+
+- name: Import tasks - sysctl
+  ansible.builtin.import_tasks: sysctl.yml
+
+- name: Import tasks - editor
+  ansible.builtin.import_tasks: editor.yml
+
+- name: Import tasks - sudo
+  ansible.builtin.import_tasks: sudo.yml
+
+- name: Import tasks - users
+  ansible.builtin.import_tasks: users.yml

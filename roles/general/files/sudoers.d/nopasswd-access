@@ -1,0 +1,5 @@
+# Grant access to certain groups without password
+# better to follow example from
+# https://www.reddit.com/r/ansible/comments/5xzj8b/how_to_modify_sudoers_file_with_ansible/dem6diq/
+
+%adm ALL=(ALL) NOPASSWD:ALL

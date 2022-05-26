@@ -1,0 +1,29 @@
+{{ ansible_managed | comment }}
+
+---
+version: "2.1"
+services:
+  wireguard:
+    image: lscr.io/linuxserver/wireguard
+    container_name: {{ wireguard_container_name }}
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Zurich
+      - SERVERURL={{ wireguard_serverurl }}
+      - SERVERPORT=51820
+      - PEERS={{ wireguard_peers | join(',') }}
+      - PEERDNS=auto
+      - INTERNAL_SUBNET=172.31.0.0
+      - ALLOWEDIPS=0.0.0.0/0
+    volumes:
+      - {{ wireguard_config_dir }}:/config
+      - /lib/modules:/lib/modules
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped

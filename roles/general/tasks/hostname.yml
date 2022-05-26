@@ -1,0 +1,16 @@
+- name: Set proper local resolution of hostname
+  ansible.builtin.lineinfile:
+    path: /etc/cloud/templates/hosts.debian.tmpl
+    regexp: '^(127.0.1.1|{{ ansible_default_ipv4.address|default(ansible_all_ipv4_addresses[0]) }}) .*{% raw %}{{fqdn}} {{hostname}}{% endraw %}'  # noqa 206
+    line: "{{ ansible_default_ipv4.address|default(ansible_all_ipv4_addresses[0]) }} {{ ansible_hostname }}.{{ domain_internal }} {{ ansible_hostname }} {{ ansible_hostname }}.{{ domain_public }} {% raw %}{{fqdn}} {{hostname}}{% endraw %}"  # noqa 206 204
+  become: true
+  when: ansible_virtualization_type != "docker"
+  notify: update /etc/hosts
+
+- name: Modify hostname
+  ansible.builtin.copy:
+    dest: /etc/hostname
+    content: "{{ ansible_hostname }}\n"
+    mode: 0644
+  become: true
+  notify: update hostname

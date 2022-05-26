@@ -1,0 +1,74 @@
+- name: Create wireguard directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: shradmin
+    group: docker
+    mode: '0775'
+  loop:
+    - "{{ wireguard_dir }}"
+    - "{{ wireguard_config_dir }}"
+  become: true
+
+- name: Add users to docker group
+  ansible.builtin.user:
+    name: "{{ item }}"
+    groups: docker
+    append: true
+  tags: users
+  loop: "{{ docker_users }}"
+  become: true
+
+- name: Create or update docker-compose file for Wireguard based on template
+  ansible.builtin.template:
+    src: templates/docker-compose.linuxserver.wireguard.yml.j2
+    dest: "{{ wireguard_dir }}/docker-compose.yml"
+    owner: shradmin
+    group: docker
+    mode: '0664'
+  tags:
+    - wireguard
+    - services
+  become: true
+
+- name: "Check if container `{{ wireguard_container_name }}'' runs"
+  ansible.builtin.command:
+    cmd: /usr/local/bin/docker-container-running.sh {{ wireguard_container_name }}
+  register: wireguard_container_check
+  ignore_errors: true
+  changed_when: '"false" in wireguard_container_check.stdout_lines'
+  become: true
+  become_user: shradmin
+  tags:
+    - wireguard
+    - services
+  notify:
+    - Take wireguard container down
+    - Take wireguard container up
+
+- name: (Re-)starting Wireguard container
+  ansible.builtin.command: /bin/true
+  when: wireguard_container_check is failed
+  tags:
+    - wireguard
+    - services
+  notify:
+    - Take wireguard container down
+    - Take wireguard container up
+
+- name: Read Wireguard configuration for peer
+  ansible.builtin.slurp:
+    src: "{{ wireguard_config_dir }}/peer_{{ p }}/peer_{{ p }}.conf"
+  register: wireguard_peer_config
+  tags:
+    - never
+    - wg_peer
+  become: true
+
+- name: "Wireguard configuration for peer {{ p }}"
+  ansible.builtin.debug:
+    msg: "{{ wireguard_peer_config['content'] | b64decode }}"
+  tags:
+    - never
+    - wg_peer
+  become: true

@@ -1,0 +1,13 @@
+all:
+  hosts:
+  children:
+    servers:
+      hosts:
+        vpn:
+          ansible_host: 74.208.30.73
+          ansible_user: root
+    vpn_hosts:
+      hosts:
+        vpn:
+          ansible_host: 74.208.30.73
+          ansible_user: root

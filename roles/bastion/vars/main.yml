@@ -1,0 +1,23 @@
+# List of Wireguard peers which are to be created
+wireguard_peers:
+  - cedricMobile1
+  - cedricMobile2
+  - cedricMobile3
+  - cedricNotebook1
+  - cedricNotebook2
+  - cedricNotebook3
+  - alexanderMobile1
+  - alexanderMobile2
+  - alexanderMobile3
+  - alexanderNotebook1
+  - alexanderNotebook2
+  - alexanderNotebook3
+
+
+# FQDN for Wireguard server
+wireguard_serverurl: 'vpn-us.5y5.one'
+
+# Where to install the docker-compose script
+wireguard_dir: /opt/wireguard
+wireguard_config_dir: "{{ wireguard_dir }}/config"
+wireguard_container_name: wireguard

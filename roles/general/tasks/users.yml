@@ -1,0 +1,45 @@
+# Manage groups
+
+# - name: Create groups
+#   ansible.builtin.group:
+#     name: "{{ item.name|mandatory }}"
+#     gid: "{{ item.gid|default(omit) }}"
+#     state: present
+#   become: true
+#   with_items: "{{ groups }}"
+#   tags: users
+
+# Manage users
+
+- name: Create users
+  ansible.builtin.user:
+    name: "{{ item.name | mandatory }}"
+    comment: "{{ item.comment|default(omit) }},{{ item.email|default(omit) }}"
+    uid: "{{ item.uid|default(omit) }}"
+    groups: "{{ item.groups|default(omit) }}"
+    shell: "{{ item.shell|default(omit) }}"
+    home: "/home/{{ item.name }}"
+    generate_ssh_key: false
+    append: true
+    state: present
+  become: true
+  with_items: "{{ users }}"
+  tags: users
+
+- name: Set authorized_keys for users
+  ansible.posix.authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ item.public_keys|default('') }}"
+    path: "/home/{{ item.name }}/.ssh/authorized_keys"
+    state: present
+  become: true
+  with_items: "{{ users }}"
+  tags: users
+
+# - name: Remove users
+#   ansible.builtin.user:
+#     name: "{{ item }}"
+#     state: absent
+#   become: true
+#   with_items: "{{ users_remove }}"
+#   tags: users

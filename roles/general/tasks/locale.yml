@@ -1,0 +1,20 @@
+- name: Generate locale file
+  ansible.builtin.copy:
+    content: |
+      {% for line in locale_list %}{{ line }}
+      {% endfor %}
+    dest: /etc/locale.gen
+    mode: 0644
+  become: true
+
+- name: Set locales
+  community.general.locale_gen:
+    name: "{{ item }}"
+  become: true
+  loop:
+    - "en_US.UTF-8"
+    - "en_US"
+    - "de_CH.UTF-8"
+    - "de_CH"
+    - "de_DE.UTF-8"
+    - "de_DE"

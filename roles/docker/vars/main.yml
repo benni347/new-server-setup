@@ -1,0 +1,16 @@
+apt_key_urls:
+  - "https://download.docker.com/{{ ansible_system|lower }}/{{ ansible_distribution|lower }}/gpg"
+
+apt_repos_list:
+  - "deb [arch=amd64] https://download.docker.com/{{ ansible_system|lower }}/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} stable"
+
+pkgs:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+
+docker_compose_version: v2.1.1
+
+docker_users:
+  - cdrc
+  - askwar

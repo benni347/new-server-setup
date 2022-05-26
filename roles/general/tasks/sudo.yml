@@ -1,0 +1,11 @@
+# Configure sudo
+
+- name: Allow specified groups to use sudo without password
+  ansible.builtin.copy:
+    src: sudoers.d/nopasswd-access
+    dest: /etc/sudoers.d/nopasswd-access
+    owner: root
+    group: root
+    mode: 0440
+    validate: 'visudo -cf %s'
+  become: true

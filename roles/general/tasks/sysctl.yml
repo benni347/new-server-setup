@@ -1,0 +1,17 @@
+- name: Set Sysctl core_uses_pid
+  ansible.posix.sysctl:
+    name: kernel.core_uses_pid
+    value: "1"
+  become: true
+
+- name: Set Sysctl tcp_syncookies
+  ansible.posix.sysctl:
+    name: net.ipv4.tcp_syncookies
+    value: "1"
+  become: true
+
+- name: Set Sysctl swappiness
+  ansible.posix.sysctl:
+    name: vm.swappiness
+    value: "0"
+  become: true

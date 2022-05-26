@@ -1,0 +1,7 @@
+- name: update /etc/hosts
+  ansible.builtin.command: cloud-init single --name update_etc_hosts
+  become: true
+
+- name: update hostname
+  ansible.builtin.command: hostname -F /etc/hostname
+  become: true

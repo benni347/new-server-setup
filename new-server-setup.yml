@@ -1,0 +1,94 @@
+---
+- hosts: server
+  tasks:
+  - name: Update and upgrade apt repos
+    ansible.builtin.apt:
+      update_cache: true
+      upgrade: full
+
+  - name: Install install docker, docker-compose, fish and net-tools
+    ansible.builtin.apt:
+      pkg:
+        - docker
+        - docker-compose
+        - fish
+        - net-tools
+        - neovim
+        - git
+
+  - name: Create /etc/sudoers.d/operator_no_passwd
+    ansible.builtin.file:
+      path: /etc/sudoers.d/operator_no_passwd
+      owner: root
+      group: root
+      mode: "0644"
+
+  - name: Change content of operator_no_passwd
+    ansible.builtin.file:
+      path: /etc/sudoers.d/operator_no_passwd
+      line: "%operator ALL=(ALL:ALL) NOPASSWD:ALL"
+
+  - name: Create a user named cdrc with primary-shell of fish and groups of sudo,operators
+    ansible.builtin.user:
+      name: cdrc
+      shell: /usr/bin/fish
+      groups: sudo,operators
+
+  - name: Create a user named alexander with primary-shell of fish and groups of sudo,operators
+    ansible.builtin.user:
+      name: alexander
+      shell: /usr/bin/fish
+      groups: sudo,operators
+
+  - name: Create .ssh/ and change .ssh to 0700
+    ansible.builtin.file:
+      path: /home/cdrc/.ssh/
+      owner: cdrc
+      group: cdrc
+      mode: "0700"
+
+  - name: Create .ssh/authorized_keys and change perms of .ssh/authorized_keys to 0600
+    ansible.builtin.file:
+      path: /home/cdrc/.ssh/authorized_keys
+      owner: cdrc
+      group: cdrc
+      mode: "0600"
+
+  - name: Create .ssh/ and change .ssh to 0700
+    ansible.builtin.file:
+      path: /home/alexander/.ssh/
+      owner: alexander
+      group: alexander
+      mode: "0700"
+
+  - name: Create .ssh/authorized_keys and change perms of .ssh/authorized_keys to 0600
+    ansible.builtin.file:
+      path: /home/alexander/.ssh/authorized_keys
+      owner: alexander
+      group: alexander
+      mode: "0600"
+
+  - name: Added the allowed ssh keys to .ssh/authorized_keys
+    ansible.builtin.file:
+      path: /home/cdrc/.ssh/authorized_keys
+      line: |
+        ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDC/VVI5K2lOoA7UyI8jq1uLvk15Sv3nlwHCiWQjE0mUgk2rsf1dC/xI6X+rIvQC+tNlXLin017f30Zo3OnvCkk7rK18Q+AMoeNClWBSUQlrvHJsCFSqRz+q7FL8qGd9/csz9sXO23634cUVQs7udwbD1XIr69IU9/LereTarMgwHtqMg3PzSiUB6T5KvZsSxfwvfj3CKAQE/BJnHlnPgttBV/6cLHm373gMesiFulIZLAD4OtHV6nqZqXaJKGw64ZBM0iHJ/alOWZnTq/73s0gqWqxo2c7j36hKvCu6t8uxzaFQRsRSSFOqQozIlDU74TZqINSRE9l92TuyBbCEMDy2olZdQXRzzkuyJPSorMfqsOPIFxkLcMGyfSs8vPmjEGaYm+lxJGO+b6ed6ZuayF+UAWWhvJdiiK4jj9r2T2BhbnhThqb0glzFQ+VkEuqBoQtovbBi9A4ZlqPdeihGFQimf9IYxQI+4s36EdwJv5s4GGP4cag5ChA10tHiE4t4ME= cedric@pop-os 
+        ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC6EBgev0UqaVN0aF4/tD78L2oy0KGiJB5isbpaunsum0P1EjeZnHd7V8/Bt5mYVk9xBcYXV94w4uZwsY3HHyhSrhPgFUa1kD2ClvhxaPdmrZ5hu+Wd/oSF3xDTwk/fsZ9zjLQr/oeiViMXdicoUn9SvHEvkX0WdAYWJnCqh0+NlXZWBqhBTNHbao4UKjYR8/ZIOnZyVqs7odpptZH93Bgp2TH91Mn7LyMST0UJt5eTbjX/iJ5CmEvP5pOcAplPdbgHm15sQc1MonLGxSUkXoQ6DiYOTYG+bXJdROlHy1J5xZrMfRdz7yflfGucuA+PGXRR97lm1Z9XIN8lcIpGII82shwKVTKwh5TxWrdAr8HGtcqg+FPAIv2p5NmkWhVVssGtI26uYerjA77f3maPqJsK5bLfKwBd1SuCWTnAD5Lb+6aDGEUKlboG0qeZ8gFqFdkeh41NngMQX9yyJpYwUA6AltP7ldiYxO8ZgvBAZiPUdWr0l1f33Bq9U8GiAV7Bi7s= cdrc@cdrc-TUXEDO-InfinityBook-Pro-14-Gen6
+
+  - name: Added the allowed ssh keys to .ssh/authorized_keys
+    ansible.builtin.file:
+      path: /home/alexander/.ssh/authorized_keys
+      line: |
+        ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjRInH1GuGNIU8QwUGmgi6clsGNc2Ze9RM/A6i2yRHw/p3vOaTwC2kVFW08dR9F/Es/cIrl+bB3fYCZNeYaQ/tXVa8C+uu7ad4ygsLES9Aja8qJEFeSxj+QnEJBVQt7pknxuBC2uRnuqh6gKzWcwheVhzgenMMSbJKj3ERL5pSdbtsDdSL7Oj0X9YHxo5caZAzw01LVoJ2o3KwpAWGaHd8GpeP4rU6PkkFyCHrf6seJq+ukv8OMne4DDEv3qR0j3DAmIBAB7dG7sTcRp9xbTz2RhfF/aQSly5UvQ4j2KKjVlVwhjgq1BalXVCjb0LjFys4fNJKB3iohiFHE/YR6oS3 /Users/alex/.ssh/id_rsa 
+        ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPjVBCP1fyrlm1x/liZxKFs9LPmkZphMCdRmAsV3ia/+UODsEIupzvOSfxsZd7SwlUedq6fdo11XfpVB+Ffuy1Vc9fjSR+6YJeiyf4zrUbZNceENrKpz8QLXrXvm89Jdaqqbt/Rs0zfhVv+SV83yx1N5QmCf9JYt7SjpqeBpIDe1LqatL/TTrBf0GQZ74Um81cFxstsDn/emJtJMIs0DpSABZptP0+WmmBK/6gSBvVHfs+UvIDXKl/qmvW3mUSqrjhOZOhLfHBp7dTpqK3PwEdhIp/k+npvOVPQ3NpBe+RKBol7YQOWHGktvfuUUnyZt+cCF1yr9CcivLhFbQIg9A5
+        ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDNoZPOt5WWvCsNLZMmKZbz3ATP6KcVKJLioiToFxESN9mDpsnRs11fQJEjx6S4btLz+s5iRD0v5YbatsgGTyDHHy0TVkS3M+EUpwF6s5xGddPVuwzEQDr2W5uW4RorO7BagLd+LVFkw0Iw8bH6leaYhEa/VXNz2RMhax8iMKH/cK8f0ZhwmWQctJbNgICdlFRipad1KLaeiDJzRDahE0uQYABMeUoXx8FTa+vaUQQk2kbm3zJe8vClXuUtaUSSIFL5UEIfbtdT6QX4w7Uqa1V8jyQA+uZvuM/T5yY3m0C6WL0FfTTf8mosQ8dOca1c9dUXh7FvGZtlN5IIdc1Ckds7 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/bzLDcIRomIjqrAY4xUPRx3dZNU2k2MoldgQp177RLtqtN7BAimlNItB4z2fe4E4mzUa5k/HknNAu/4ZpZIn6OrjrkOZbMguYs6sbh5090XAq7J8cDrG9wGnh467ICDFvyb/9X3FMWs7XgDqobwiTJPDhikxmvtTtkraivwGwY8mdXLvgA7ljY0DC4ToLMwAAYKguqUQ0wKzhUIDmP288q95wKKLYhwN0KfpQUhupMUQkDhYR19N6uBow3cGoSWQb8hUvYEj2UJ8w1m0xnrt2zURTFEe2Xco6DvwAXErO5ma+j9296C69F3JMk3aEXETY07NyD6veGWNgfr8DU6ULVTEEMFmkknOHyCSGuhff5H8B1TipPt9cA6xtzgrdG8y6nbleHv4Tt8th9rHGbcAMBRylhL+gB38xcWwKJxWfL1DFpHe0Ijty3hfBuHqq7tPeYN/qOJDt73cq3VNleOBOW2NH5NFbIOl0ysnsqK/MtwMabJhH+4puDzdJNpqZl/E= Aleander Skwar (Ubuntu) <askwar@a00c053.int.5y5.one> 
+        ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOU2gmOI+RJqke4BY1M9/M6NaDJj2MCyqQ7DrMjU95hq Alexander Skwar (Ubuntu) <alex@a00c053.int.5y5.one> 
+        ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCZOvVT7hgRar2Kp6138Uw1zEtHY3OOrejVGxIuxpXRzePNOOLpZNZaOQiAuvMcEEM5Vbk1m8lP1AaqJuo1bHQnZnD9+sZ+c2nNxMN/7x1IvE0w9ZvawE2jGetSm/RZzscNM4RkRGNG3aUiWMTXjDUB/4Cg24D52nabdMbiad+Daeu9xF8vQwaQc1fhZZ5eErL5Qi0GpZO8DTp+pwVIaj8V3qL2LvJQmitYXLZikzsxNA2Gj63TPmx0UwMKT9LgnlA3E+NcGYpIGPG5K+pyLIWOWkY9AiB/qQGGcN7jLddY3MtnIJc2AK8k+3mU6atll8PLD6maYX474WmG+WEiOzuyS/blXLWxYVvtnAg++1zEgmU77b5kw7SSi+nabztIYm19lc1zEiZ2SovbsciLSZJwK1c7Ytx7rbYBOETQIBDHaSg/1SmYZgomc+XlDvZvTuUsbGhrOqgVlgL8KG5T6Xw5EF62k8c08MKjRxI3ovi9XxSHTlDuEDjs9GuPgWJTYok= Alexander Skwar (Private) <a@skwar.me> 
+        ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCgDNgeps6mZwt10i4TtQNM4DrnT8C/B0MgU+zqPiaXJDrviGJOyoP+sCKPoyAyB/Pqsw4kXgAD838D/pESgjsvaEE0VY38tJFjLSCIqw8NyzsnntptSPwZSJfJ2aVNtwT6xXH3OqKymD2AqOjTBAzXMpDZ8gvoF4ZRIQsIrFgJWMA8O7hhOr3qnZENoqotdYUlHAp54QjhXGNq7HAWATQPR1kuR2zd7uh9BpPhy1KNPk9foiT6HejsJ2X5M12qB7eHkjAQAxg+nQHRAJ2AEwpicSZCRHpP1oKeKpxjj01RlJ+Zx68Pjm+iwGjRAJSEidpAlDlGo+wlnOAX2/SI/cwR Sharedien Admin <sharedien@advellence.com> 
+        ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIt7vak0OePXzHXoI0m26BR6Pv4NnNS+oMGRUut8JYqIYHVz2ReB5ZhT4K298l+zZRyfK6Tiu+/jTKShj90B0Ngo63/Gs+gf0i+cMZuhRZxFlvUlJkPZ3RMG7TgsEeXumhM/mxIL5+2Ia2rtVME8uJ/15HQX6CVkE6TPaTJKHUKJMQF8VyTpEsIQblC4wW2OCcAF+JsU/Z/N2Yzc7xWH8Q7dX/ZHwVwQcGDeEFI6Ca77dVw+rJ4Kq7vjLSQZFVAmNN75KRy/cNhtX9XIpr+HEDu+UJY6wuzoMZZauxqEc2f9e4VLqiacTmYQV/OsjeJqRNFaX9BnCN/mgwMZy7JEPb Alexander Skwar (rsa-2048) <alexander.skwar@advellence.com> 
+        ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEnJyeykRw/kuxmI9CiiVcoGq4hAmZPszQk5Z7BFjTGe Alexander Skwar (ed25519) <alexander.skwar@advellence.com>
+
+  - name: Update and upgrade apt repos
+    ansible.builtin.apt:
+      update_cache: true
+      upgrade: full

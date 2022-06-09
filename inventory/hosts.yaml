@@ -4,10 +4,10 @@ all:
     servers:
       hosts:
         vpn:
-          ansible_host: 74.208.30.73
-          ansible_user: root
+          ansible_host: 
+          ansible_user: shradmin
     vpn_hosts:
       hosts:
         vpn:
-          ansible_host: 74.208.30.73
-          ansible_user: root
+          ansible_host: 
+          ansible_user: shradmin

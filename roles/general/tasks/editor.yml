@@ -29,9 +29,6 @@
   tags: packages
   become: true
   loop:
-    - ex
-    - vi
-    - view
     - vim
     - vimdiff
     - nvim

@@ -1,14 +1,14 @@
 ---
-#
-#- hosts: servers
-#  gather_facts: true
-#  roles:
-#    - general
-#    - docker
 
-- hosts: vpn_hosts
+- hosts: servers
   gather_facts: true
   roles:
     - general
     - docker
-    - bastion
+
+# - hosts: vpn_hosts
+#   gather_facts: true
+#   roles:
+#     - general
+#     - docker
+#     - bastion

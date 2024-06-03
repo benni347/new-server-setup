@@ -1,27 +1,16 @@
+---
 # domain_internal: sharedien.internal
 # domain_public: sharedien.systems
-
-base_packages_apt_early:
-  - gpg
-
+base_packages_apt_early: [gpg]
 base_packages_apt:
   - apt-transport-https
-  - azure-cli
   - ca-certificates
   - curl
   - fish
   - gnupg-agent
   - ripgrep
   - software-properties-common
-
 base_packages_pip:
-
-apt_key_urls:
-  - https://packages.microsoft.com/keys/microsoft.asc
-
-apt_repos_list:
-  - "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ {{ ansible_distribution_release }} main"
-
 locale_list:
   - de_CH ISO-8859-1
   - de_CH.UTF-8 UTF-8
@@ -31,12 +20,10 @@ locale_list:
   - en_US ISO-8859-1
   - en_US.ISO-8859-15 ISO-8859-15
   - en_US.UTF-8 UTF-8
-
 # groups:
 #  - { name: git, gid: 5000 }
 
 # Example:
 # users:
 #   - { name: doe.j, uid: 10000, comment: "John Doe", email: "john.doe@advellence.com", shell: "/bin/sh", groups: [adm, sudo, users], public_keys: "ssh-rsa …" }
-
 users_remove:

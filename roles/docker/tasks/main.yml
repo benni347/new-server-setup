@@ -4,31 +4,18 @@
   tags: packages
   become: true
   loop: "{{ apt_key_urls }}"
-
 - name: Add repos
   ansible.builtin.apt_repository:
     repo: "{{ item }}"
   tags: packages
   become: true
   loop: "{{ apt_repos_list }}"
-
 - name: Install Docker packages
   ansible.builtin.apt:
     name: "{{ pkgs }}"
     update_cache: true
   tags: packages
   become: true
-
-- name: Install docker-compose
-  ansible.builtin.get_url:
-    url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
-    dest: /usr/local/bin/docker-compose
-    owner: root
-    group: root
-    mode: "0755"
-  tags: packages
-  become: true
-
 - name: Install helper scripts
   ansible.builtin.copy:
     src: "files/scripts/{{ item }}"
@@ -39,7 +26,6 @@
   loop:
     - docker-container-running.sh
   become: true
-
 - name: Add shradmin user to docker group
   ansible.builtin.user:
     name: shradmin

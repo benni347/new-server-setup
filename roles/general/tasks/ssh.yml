@@ -6,3 +6,10 @@
     group: root
     mode: 0644
   become: true
+
+- name: Ensure sshd config is reloaded
+  become: true
+  ansible.builtin.systemd:
+    name: sshd
+    enabled: yes
+    state: restarted

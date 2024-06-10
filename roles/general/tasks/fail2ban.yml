@@ -1,0 +1,21 @@
+- name: Install fail2ban
+  ansible.builtin.apt:
+    name: fail2ban
+    state: present
+  become: true
+
+- name: Default Fail2Ban Config
+  ansible.builtin.copy:
+    src: fail2ban/sshd.conf
+    dest: /etc/fail2ban/jail.d/98-sshd.conf
+    owner: root
+    group: root
+    mode: 0600
+  become: true
+
+- name: Ensure fail2ban is enabled and running
+  become: true
+  ansible.builtin.systemd:
+    name: fail2ban
+    enabled: yes
+    state: restarted

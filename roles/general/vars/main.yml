@@ -9,6 +9,7 @@ base_packages_apt:
   - fish
   - gnupg-agent
   - ripgrep
+  - auditd
   - software-properties-common
 base_packages_pip:
 locale_list:

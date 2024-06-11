@@ -20,3 +20,12 @@
 
 - name: Import tasks - users
   ansible.builtin.import_tasks: users.yml
+
+- name: Import tasks - ssh
+  ansible.builtin.import_tasks: ssh.yml
+
+- name: Import tasks - fail2ban
+  ansible.builtin.import_tasks: fail2ban.yml
+
+- name: Import tasks - ufw
+  ansible.builtin.import_tasks: ufw.yml

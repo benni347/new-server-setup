@@ -1,0 +1,12 @@
+- name: Ensure chrony is installed
+  ansible.builtin.apt:
+    name: chrony
+    state: present
+  become: true
+
+- name: Ensure chrony config is reloaded
+  become: true
+  ansible.builtin.systemd:
+    name: chrony
+    enabled: yes
+    state: started

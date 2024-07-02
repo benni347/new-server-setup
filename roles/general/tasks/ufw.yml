@@ -38,6 +38,7 @@
     rule: limit
     port: ssh
     proto: tcp
+  become: true
 
 - name: Ensure ufw is enabled and running
   become: true

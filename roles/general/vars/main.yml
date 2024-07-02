@@ -11,6 +11,9 @@ base_packages_apt:
   - ripgrep
   - auditd
   - software-properties-common
+  - iptables
+  - iptables-persistent
+  - aide
 base_packages_pip:
 locale_list:
   - de_CH ISO-8859-1
@@ -21,6 +24,21 @@ locale_list:
   - en_US ISO-8859-1
   - en_US.ISO-8859-15 ISO-8859-15
   - en_US.UTF-8 UTF-8
+packages_apt_uninstalled:
+  - samba
+  - nftables
+  - avahi-daemon
+  - prelink
+  - nfs-kernel-server
+  - cups
+  - isc-dhcp-server
+  - xserver-xorg
+  - bind9
+  - vsftpd
+  - rpcbind
+  - ldap-utils
+  - telnet
+  - squid
 # groups:
 #  - { name: git, gid: 5000 }
 

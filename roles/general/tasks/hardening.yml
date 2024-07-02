@@ -1,0 +1,50 @@
+- name: Uninstall tools not good for security
+  ansible.builtin.apt:
+    name: "{{ packages_apt_uninstalled }}"
+    state: absent
+    purge: true
+  tags: packages
+  become: true
+
+- name: Change ownership of audit tools to root
+  file:
+    path: "{{ item }}"
+    owner: root
+    group: root
+  loop:
+    - /sbin/auditctl
+    - /sbin/aureport
+    - /sbin/ausearch
+    - /sbin/autrace
+    - /sbin/auditd
+    - /sbin/augenrules
+
+- name: Remove more permissive modes from audit tools
+  file:
+    path: "{{ item }}"
+    mode: '0755'
+  loop:
+    - /sbin/auditctl
+    - /sbin/aureport
+    - /sbin/ausearch
+    - /sbin/autrace
+    - /sbin/auditd
+    - /sbin/augenrules
+
+- name: Verify ownership of audit tools
+  command: stat -c "%n %U" /sbin/auditctl /sbin/aureport /sbin/ausearch /sbin/autrace /sbin/auditd /sbin/augenrules
+  register: ownership_check
+
+- name: Ensure audit tools are owned by root
+  assert:
+    that:
+      - "'root' in ownership_check.stdout"
+
+- name: Verify permissions of audit tools
+  command: stat -c "%n %a" /sbin/auditctl /sbin/aureport /sbin/ausearch /sbin/autrace /sbin/auditd /sbin/augenrules
+  register: permissions_check
+
+- name: Ensure audit tools have correct permissions
+  assert:
+    that:
+      - "'755' in permissions_check.stdout"

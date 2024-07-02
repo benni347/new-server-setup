@@ -27,5 +27,11 @@
 - name: Import tasks - fail2ban
   ansible.builtin.import_tasks: fail2ban.yml
 
+- name: Import tasks - hardening
+  ansible.builtin.import_tasks: hardening.yml
+
+- name: Import tasks - chrony
+  ansible.builtin.import_tasks: chrony.yml
+
 - name: Import tasks - ufw
   ansible.builtin.import_tasks: ufw.yml

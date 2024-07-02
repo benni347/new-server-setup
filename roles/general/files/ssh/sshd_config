@@ -5,7 +5,7 @@ LogLevel INFO
 LoginGraceTime 2m
 PermitRootLogin no
 StrictModes yes
-MaxAuthTries 6
+MaxAuthTries 4
 
 PubkeyAuthentication yes
 
@@ -30,3 +30,8 @@ UsePAM yes
 X11Forwarding no
 PrintMotd no
 
+AllowTcpForwarding no
+MaxStartups 10:30:60
+LoginGraceTime 60
+ClientAliveInterval 15
+ClientAliveCountMax 3

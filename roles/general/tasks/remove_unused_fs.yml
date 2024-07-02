@@ -1,0 +1,21 @@
+- name: Remove unused filesystems
+  block:
+    - name: Remove /etc/modprobe.d/blacklist_unused_fs.conf if it exists
+      ansible.builtin.file:
+        path: /etc/modprobe.d/blacklist_unused_fs.conf
+        state: absent
+      become: true
+
+    - name: Remove /etc/modprobe.d/install_unused_fs.conf if it exists
+      ansible.builtin.file:
+        path: /etc/modprobe.d/install_unused_fs.conf
+        state: absent
+      become: true
+
+    - name: Disable and unload unused filesystems
+      ansible.builtin.shell: |
+        echo "install {{ item }} /bin/true" >> /etc/modprobe.d/install_unused_fs.conf
+        echo "blacklist {{ item }}" >> /etc/modprobe.d/blacklist_unused_fs.conf
+        rmmod {{ item }} || true
+      loop: "{{ general_unused_fs | default([]) }}"
+  become: true

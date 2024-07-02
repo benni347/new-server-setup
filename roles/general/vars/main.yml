@@ -14,6 +14,7 @@ base_packages_apt:
   - iptables
   - iptables-persistent
   - aide
+  - aide-common
 base_packages_pip:
 locale_list:
   - de_CH ISO-8859-1
@@ -39,6 +40,15 @@ packages_apt_uninstalled:
   - ldap-utils
   - telnet
   - squid
+general_unused_fs:
+  - hfs
+  - jffs2
+  - freevxfs
+  - cramfs
+  - hfsplus
+  - squashfs
+  - udf
+  - usb-storage
 # groups:
 #  - { name: git, gid: 5000 }
 

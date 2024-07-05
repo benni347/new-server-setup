@@ -30,3 +30,27 @@
   - See `ansible-playbook --help` for ways to limit which tasks are
     executed where. Example:
     - `ansible-playbook l bastion --start-at-task 'Install pip'`
+
+## cloud-config
+
+Ensure you are buying a server where you can use a cloud-init script.
+This cloud init script creates the correct user, under the **assumption** that you have your public ssh key in /root/.ssh/authorized_keys.
+```
+#cloud-config
+
+# Create the shradmin user
+users:
+  - name: shradmin
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    groups: sudo
+    lock_passwd: true
+
+# Copy SSH key from root user to shradmin
+runcmd:
+  - mkdir -p /home/shradmin/.ssh
+  - cp /root/.ssh/authorized_keys /home/shradmin/.ssh/authorized_keys
+  - chown -R shradmin:shradmin /home/shradmin/.ssh
+  - chmod 700 /home/shradmin/.ssh
+  - chmod 600 /home/shradmin/.ssh/authorized_keys
+```

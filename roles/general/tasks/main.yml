@@ -30,11 +30,11 @@
 - name: Import tasks - hardening
   ansible.builtin.import_tasks: hardening.yml
 
-- name: Import tasks - unused fs
-  ansible.builtin.import_tasks: remove_unused_fs.yml
+- name: Import tasks - modprobe
+  ansible.builtin.import_tasks: modprobe.yml
 
 - name: Import tasks - chrony
   ansible.builtin.import_tasks: chrony.yml
 
-- name: Import tasks - ufw
-  ansible.builtin.import_tasks: ufw.yml
+- name: Import tasks - firewall
+  ansible.builtin.import_tasks: firewall.yml

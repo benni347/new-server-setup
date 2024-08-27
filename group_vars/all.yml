@@ -4,8 +4,32 @@
 # OS users to create on all systems.
 # Note: Might also wanto add users to "docker" group in roles/docker/vars/main.yml
 users:
-  - {name: askwar, uid: 1000, comment: "Alexander Skwar", email: "alexander.skwar@advellence.com", shell: "/usr/bin/fish", groups: [adm, sudo, users], public_keys: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEnJyeykRw/kuxmI9CiiVcoGq4hAmZPszQk5Z7BFjTGe Alexander Skwar (ed25519) <alexander.skwar@advellence.com>\nssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIt7vak0OePXzHXoI0m26BR6Pv4NnNS+oMGRUut8JYqIYHVz2ReB5ZhT4K298l+zZRyfK6Tiu+/jTKShj90B0Ngo63/Gs+gf0i+cMZuhRZxFlvUlJkPZ3RMG7TgsEeXumhM/mxIL5+2Ia2rtVME8uJ/15HQX6CVkE6TPaTJKHUKJMQF8VyTpEsIQblC4wW2OCcAF+JsU/Z/N2Yzc7xWH8Q7dX/ZHwVwQcGDeEFI6Ca77dVw+rJ4Kq7vjLSQZFVAmNN75KRy/cNhtX9XIpr+HEDu+UJY6wuzoMZZauxqEc2f9e4VLqiacTmYQV/OsjeJqRNFaX9BnCN/mgwMZy7JEPb Alexander Skwar (rsa-2048) <alexander.skwar@advellence.com>"}
-  - {name: cdrc, uid: 1001, comment: "Cédric Skwar", email: "cdrc@skwar.me", shell: "/usr/bin/fish", groups: [adm, sudo, users], public_keys: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDC/VVI5K2lOoA7UyI8jq1uLvk15Sv3nlwHCiWQjE0mUgk2rsf1dC/xI6X+rIvQC+tNlXLin017f30Zo3OnvCkk7rK18Q+AMoeNClWBSUQlrvHJsCFSqRz+q7FL8qGd9/csz9sXO23634cUVQs7udwbD1XIr69IU9/LereTarMgwHtqMg3PzSiUB6T5KvZsSxfwvfj3CKAQE/BJnHlnPgttBV/6cLHm373gMesiFulIZLAD4OtHV6nqZqXaJKGw64ZBM0iHJ/alOWZnTq/73s0gqWqxo2c7j36hKvCu6t8uxzaFQRsRSSFOqQozIlDU74TZqINSRE9l92TuyBbCEMDy2olZdQXRzzkuyJPSorMfqsOPIFxkLcMGyfSs8vPmjEGaYm+lxJGO+b6ed6ZuayF+UAWWhvJdiiK4jj9r2T2BhbnhThqb0glzFQ+VkEuqBoQtovbBi9A4ZlqPdeihGFQimf9IYxQI+4s36EdwJv5s4GGP4cag5ChA10tHiE4t4ME= cedric@pop-os\nssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC6EBgev0UqaVN0aF4/tD78L2oy0KGiJB5isbpaunsum0P1EjeZnHd7V8/Bt5mYVk9xBcYXV94w4uZwsY3HHyhSrhPgFUa1kD2ClvhxaPdmrZ5hu+Wd/oSF3xDTwk/fsZ9zjLQr/oeiViMXdicoUn9SvHEvkX0WdAYWJnCqh0+NlXZWBqhBTNHbao4UKjYR8/ZIOnZyVqs7odpptZH93Bgp2TH91Mn7LyMST0UJt5eTbjX/iJ5CmEvP5pOcAplPdbgHm15sQc1MonLGxSUkXoQ6DiYOTYG+bXJdROlHy1J5xZrMfRdz7yflfGucuA+PGXRR97lm1Z9XIN8lcIpGII82shwKVTKwh5TxWrdAr8HGtcqg+FPAIv2p5NmkWhVVssGtI26uYerjA77f3maPqJsK5bLfKwBd1SuCWTnAD5Lb+6aDGEUKlboG0qeZ8gFqFdkeh41NngMQX9yyJpYwUA6AltP7ldiYxO8ZgvBAZiPUdWr0l1f33Bq9U8GiAV7Bi7s= cdrc@cdrc-TUXEDO-InfinityBook-Pro-14-Gen6\nssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICUpwCtmMmIbad2y4WPLvDXOZtfrz976oLn28tzOTqNV"}
+  - {
+      name: askwar,
+      uid: 1010,
+      comment: "Alexander Skwar",
+      email: "alexander.skwar@advellence.com",
+      shell: "/usr/bin/fish",
+      groups: [adm, sudo, users],
+      public_keys: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEnJyeykRw/kuxmI9CiiVcoGq4hAmZPszQk5Z7BFjTGe Alexander Skwar (ed25519) <alexander.skwar@advellence.com>\nssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIt7vak0OePXzHXoI0m26BR6Pv4NnNS+oMGRUut8JYqIYHVz2ReB5ZhT4K298l+zZRyfK6Tiu+/jTKShj90B0Ngo63/Gs+gf0i+cMZuhRZxFlvUlJkPZ3RMG7TgsEeXumhM/mxIL5+2Ia2rtVME8uJ/15HQX6CVkE6TPaTJKHUKJMQF8VyTpEsIQblC4wW2OCcAF+JsU/Z/N2Yzc7xWH8Q7dX/ZHwVwQcGDeEFI6Ca77dVw+rJ4Kq7vjLSQZFVAmNN75KRy/cNhtX9XIpr+HEDu+UJY6wuzoMZZauxqEc2f9e4VLqiacTmYQV/OsjeJqRNFaX9BnCN/mgwMZy7JEPb Alexander Skwar (rsa-2048) <alexander.skwar@advellence.com>",
+    }
+  - {
+      name: cdrc,
+      uid: 1001,
+      comment: "Cédric Skwar",
+      email: "cdrc@skwar.me",
+      shell: "/usr/bin/fish",
+      groups: [adm, sudo, users],
+      public_keys: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDC/VVI5K2lOoA7UyI8jq1uLvk15Sv3nlwHCiWQjE0mUgk2rsf1dC/xI6X+rIvQC+tNlXLin017f30Zo3OnvCkk7rK18Q+AMoeNClWBSUQlrvHJsCFSqRz+q7FL8qGd9/csz9sXO23634cUVQs7udwbD1XIr69IU9/LereTarMgwHtqMg3PzSiUB6T5KvZsSxfwvfj3CKAQE/BJnHlnPgttBV/6cLHm373gMesiFulIZLAD4OtHV6nqZqXaJKGw64ZBM0iHJ/alOWZnTq/73s0gqWqxo2c7j36hKvCu6t8uxzaFQRsRSSFOqQozIlDU74TZqINSRE9l92TuyBbCEMDy2olZdQXRzzkuyJPSorMfqsOPIFxkLcMGyfSs8vPmjEGaYm+lxJGO+b6ed6ZuayF+UAWWhvJdiiK4jj9r2T2BhbnhThqb0glzFQ+VkEuqBoQtovbBi9A4ZlqPdeihGFQimf9IYxQI+4s36EdwJv5s4GGP4cag5ChA10tHiE4t4ME= cedric@pop-os\nssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC6EBgev0UqaVN0aF4/tD78L2oy0KGiJB5isbpaunsum0P1EjeZnHd7V8/Bt5mYVk9xBcYXV94w4uZwsY3HHyhSrhPgFUa1kD2ClvhxaPdmrZ5hu+Wd/oSF3xDTwk/fsZ9zjLQr/oeiViMXdicoUn9SvHEvkX0WdAYWJnCqh0+NlXZWBqhBTNHbao4UKjYR8/ZIOnZyVqs7odpptZH93Bgp2TH91Mn7LyMST0UJt5eTbjX/iJ5CmEvP5pOcAplPdbgHm15sQc1MonLGxSUkXoQ6DiYOTYG+bXJdROlHy1J5xZrMfRdz7yflfGucuA+PGXRR97lm1Z9XIN8lcIpGII82shwKVTKwh5TxWrdAr8HGtcqg+FPAIv2p5NmkWhVVssGtI26uYerjA77f3maPqJsK5bLfKwBd1SuCWTnAD5Lb+6aDGEUKlboG0qeZ8gFqFdkeh41NngMQX9yyJpYwUA6AltP7ldiYxO8ZgvBAZiPUdWr0l1f33Bq9U8GiAV7Bi7s= cdrc@cdrc-TUXEDO-InfinityBook-Pro-14-Gen6\nssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICUpwCtmMmIbad2y4WPLvDXOZtfrz976oLn28tzOTqNV",
+    }
+  - {
+      name: container,
+      uid: 1100,
+      comment: "Container user",
+      email: "webadmin@5y5.one",
+      shell: "/usr/sbin/nologin",
+      groups: [users],
+    }
 
 ## default Ansible username/password for SSH connection
 #ansible_ssh_user: shradmin

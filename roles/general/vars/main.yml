@@ -11,10 +11,11 @@ base_packages_apt:
   - ripgrep
   - auditd
   - software-properties-common
-  - iptables
-  - iptables-persistent
   - aide
   - aide-common
+  - nftables
+  - rsyslog
+
 base_packages_pip:
 locale_list:
   - de_CH ISO-8859-1
@@ -27,8 +28,8 @@ locale_list:
   - en_US.UTF-8 UTF-8
 packages_apt_uninstalled:
   - samba
-  - nftables
   - avahi-daemon
+  - ufw
   - prelink
   - nfs-kernel-server
   - cups
@@ -40,6 +41,11 @@ packages_apt_uninstalled:
   - ldap-utils
   - telnet
   - squid
+  - rsync
+  - GDM
+  - iptables
+  - iptables-persistent
+
 general_unused_fs:
   - hfs
   - jffs2
@@ -49,6 +55,12 @@ general_unused_fs:
   - squashfs
   - udf
   - usb-storage
+
+general_unused_protocols:
+  - rds
+  - sctp
+  - dccp
+  - tipc
 # groups:
 #  - { name: git, gid: 5000 }
 

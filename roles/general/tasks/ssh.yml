@@ -4,7 +4,7 @@
     dest: /etc/ssh/sshd_config.d/98-customssh.conf
     owner: root
     group: root
-    mode: 0644
+    mode: 0600
   become: true
 
 - name: Ensure sshd config is reloaded

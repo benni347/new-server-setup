@@ -1,0 +1,48 @@
+---
+- name: Check if nftables is installed
+  ansible.builtin.package:
+    name: nftables
+    state: present
+  check_mode: true
+  register: nftables_check
+
+- name: Remove nftables if installed
+  become: true
+  ansible.builtin.apt:
+    state: absent
+    pkg:
+      - nftables
+  when: nftables_check.changed == false
+
+- name: Install and configure UFW
+  block:
+    - name: UFW - ensure it is installed
+      become: true
+      ansible.builtin.apt:
+        state: present
+        pkg:
+          - ufw
+
+    - name: UFW - ensure it is enabled and started
+      become: true
+      ansible.builtin.systemd_service:
+        name: ufw
+        state: started
+        enabled: true
+
+    - name: UFW - allow SSH
+      become: true
+      community.general.ufw:
+        rule: allow
+        port: "22"
+
+    - name: UFW - allow New SSH
+      become: true
+      community.general.ufw:
+        rule: allow
+        port: "10000"
+
+    - name: UFW - enable firewall
+      become: true
+      community.general.ufw:
+        state: enabled

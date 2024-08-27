@@ -22,13 +22,20 @@
     dest: "/usr/local/bin/{{ item }}"
     owner: root
     group: root
-    mode: '0755'
+    mode: "0755"
   loop:
     - docker-container-running.sh
   become: true
 - name: Add shradmin user to docker group
   ansible.builtin.user:
     name: shradmin
+    groups: docker
+    append: true
+  tags: users
+  become: true
+- name: Add container user to docker group
+  ansible.builtin.user:
+    name: container
     groups: docker
     append: true
   tags: users

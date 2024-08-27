@@ -4,14 +4,15 @@ all:
     servers:
       hosts:
         vpn:
-          ansible_host: 159.69.81.66
+          ansible_host: 5.75.136.124
           ansible_user: shradmin
-          ansible_port: 22
-        # debian_local:
-        #   ansible_host: 127.0.0.1
-        #   ansible_port: 2222
-        #   ansible_user: ansibleuser
-        #   ansible_connection: ssh
+          ansible_port: 10000
+    gitlab:
+      hosts:
+        main:
+          ansible_host: 188.245.120.133
+          ansible_user: shradmin
+          ansible_port: 10000
     # vpn_hosts:
     #   hosts:
     #     vpn:

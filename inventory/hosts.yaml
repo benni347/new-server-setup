@@ -12,7 +12,7 @@ all:
         main:
           ansible_host: 188.245.120.133
           ansible_user: shradmin
-          ansible_port: 10000
+          ansible_port: 22
     # vpn_hosts:
     #   hosts:
     #     vpn:

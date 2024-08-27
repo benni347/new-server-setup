@@ -6,6 +6,7 @@
       - ca-certificates
       - curl
       - gnupg-agent
+      - git
       - software-properties-common
       - build-essential
       - python3-pip
@@ -85,6 +86,7 @@
     --url "https://git.foobar.vip/" \
     --token "{{ reg_token_docker }}" \
     --executor "docker" \
+    --docker-privileged \
     --docker-image alpine:latest
 
 - name: Register gitlab shell runner
